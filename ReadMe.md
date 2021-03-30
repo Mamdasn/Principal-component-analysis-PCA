@@ -5,12 +5,12 @@ Employing PCA, this code tries to find imortant principal components of images p
 Database:
 ![an image from Database](/Database/1.jpg "An image from Database")
 Output:
-![corresponding image in Output](/Output/1_reconstructed_357.51.jpg "Corresponding image in Output")  
+![corresponding image in Output](/Output/1_reconstructed_357.51.jpg "Corresponding image in Output")
 psnr: 357.51  
 Database:
 ![an image from Database](/Database/2.jpg "An image from Database")
 Output:
-![corresponding image in Output](/Output/2_reconstructed_357.2.jpg "Corresponding image in Output")  
+![corresponding image in Output](/Output/2_reconstructed_357.2.jpg "Corresponding image in Output")
 psnr: 357.2
 
 # Usage 🛠️
