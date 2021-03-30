@@ -22,13 +22,18 @@ def image2uint8(img):
                          \r\tInput img should be of dtype float.")
     return (255*img).astype(np.uint8)
 
-def display_images(img, img_reconstructed):
+def display_images(img_fullname, img, img_reconstructed, psnr):
     h, w =  img.shape
+    if (w < 250):
+        h = h * 250//w 
+        w = 250
+        img = cv2.resize(img, dsize=(h, w))
+        img_reconstructed = cv2.resize(img_reconstructed, dsize=(h, w))
     font = cv2.FONT_HERSHEY_SIMPLEX
-    title_img = np.ones((20, 2*w+90))
-    title_img =  cv2.putText(title_img, 'original Image', (50, 10), font, 0.4, (0, 0, 0), 2, cv2.LINE_AA)
-    title_img = cv2.putText(title_img, 'Reconstructed Image', (2*w+90-170, 10), font, 0.4, (0, 0, 0), 2, cv2.LINE_AA)
-    print('title_img.shape', title_img.shape)
+    title_img = np.ones((30, 2*w+90))
+    title_img =  cv2.putText(title_img, 'Original Image', (80, 20), font, 0.6, (0, 0, 0), 2, cv2.LINE_AA)
+    title_img_names = cv2.putText(title_img, 'Reconstructed Image', (2*w+90-245, 20), font, 0.6, (0, 0, 0), 2, cv2.LINE_AA)
+    title_img_psnr = cv2.putText(np.ones((30, 2*w+90)), f'PSNR: {psnr}', (20, 20), font, 0.6, (0, 0, 0), 2, cv2.LINE_AA)
     
     img_or = np.concatenate((
                     np.concatenate((np.ones((h, 20)), img), axis=1), 
@@ -39,14 +44,15 @@ def display_images(img, img_reconstructed):
                     )
     
     img_or_t = np.concatenate((
+                    title_img_names,
                     img_or,
-                    title_img
+                    title_img_psnr
                 ),
                 axis=0
             )
-    print('img_or.shape', img_or.shape)
-    cv2.imshow('Original Image     -     Reconstructed Image', img_or_t)
     
+    # cv2.imwrite(f'Figures{slash}Figure-{img_fullname}', image2uint8(img_or_t))
+    cv2.imshow('Original Image - Reconstructed Image', img_or_t)
     cv2.waitKey(1000)
     cv2.destroyAllWindows() 
 
@@ -113,7 +119,7 @@ def main():
         psnr = cv2.PSNR(img, img_reconstructed)
         print(img_fullname, '\tpsnr: ', psnr)
         
-        display_images(img, img_reconstructed)
+        display_images(img_fullname, img, img_reconstructed, round(psnr, 2))
         
         img_name, img_extension = os.path.splitext(img_fullname)
         # cv2.imwrite(f"{Destination}{slash}{img_name}{img_extension}", image2uint8(img))
