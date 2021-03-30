@@ -117,7 +117,7 @@ def main():
         
         img_name, img_extension = os.path.splitext(img_fullname)
         # cv2.imwrite(f"{Destination}{slash}{img_name}{img_extension}", image2uint8(img))
-        cv2.imwrite(f"{Destination}{slash}{img_name}_reconstructed_{psnr}{img_extension}", image2uint8(img_reconstructed))
+        cv2.imwrite(f"{Destination}{slash}{img_name}_reconstructed_{round(psnr, 2)}{img_extension}", image2uint8(img_reconstructed))
         
 
 if __name__ == '__main__': main()
