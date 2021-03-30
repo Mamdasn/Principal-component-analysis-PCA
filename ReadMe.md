@@ -4,6 +4,7 @@ Employing PCA, this code tries to find imortant principal components of images p
 
 ![an image from Database](/Database/1.jpg "An image from Database")
 ![corresponding image in Output](/Output/1_reconstructed_357.51286929921866.jpg "Corresponding image in Output")
+psnr: 357.512
 
 # Usage 🛠️
 ✔️ After installing required python libraries by entering
