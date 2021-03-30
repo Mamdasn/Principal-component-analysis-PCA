@@ -2,16 +2,8 @@
 This is a showcase on how PCA is used for dimensionality reduction. Putting aside non-essential dimensions, especially for the case of big datasets, helps programmers and data scientists to work with data in a more efficient way.  
 Employing PCA, this code tries to find imortant principal components of images provided in `Database` as a whole and by omitting insignificant features it attempts to reduce its size.  
 
-Database:
-![an image from Database](/Database/1.jpg "An image from Database")
-Output:
-![corresponding image in Output](/Output/1_reconstructed_357.51.jpg "Corresponding image in Output")
-PSNR: 357.51    
-Database:
-![an image from Database](/Database/2.jpg "An image from Database")
-Output:
-![corresponding image in Output](/Output/2_reconstructed_357.2.jpg "Corresponding image in Output")
-PSNR: 357.2
+![An image from Database and its corresponding Output](/Figures/Figure-1.jpg "An image from Database and its corresponding Output")
+![An image from Database and its corresponding Output](/Figures/Figure-2.jpg "An image from Database and its corresponding Output")  
 
 # Usage 🛠️
 ✔️ After installing required python libraries by entering
