@@ -50,7 +50,7 @@ def display_images(img_fullname, img, img_reconstructed, psnr):
                 axis=0
             )
     
-    # cv2.imwrite(f'Figures{slash}Figure-{img_fullname}', image2uint8(img_or_t))
+    cv2.imwrite(f'Figures{slash}Figure-{img_fullname}', image2uint8(img_or_t))
     cv2.imshow('Original Image - Reconstructed Image', img_or_t)
     cv2.waitKey(1000)
     cv2.destroyAllWindows() 
