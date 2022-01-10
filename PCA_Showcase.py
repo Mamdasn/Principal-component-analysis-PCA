@@ -2,7 +2,6 @@ import numpy as np
 import os
 import platform
 import cv2
-from time import sleep
 
 slash = '\\' if platform.system() == 'Windows' else '/'
 
@@ -15,9 +14,9 @@ def image2double(img):
     if (img.dtype != np.uint8):
         raise ValueError("ValueError exception thrown!\n \
                          \r\tInput img should be of dtype uint8.")
-    return img.astype(np.float) / (np.iinfo(img.dtype).max - np.iinfo(img.dtype).min)
+    return img.astype(float) / (np.iinfo(img.dtype).max - np.iinfo(img.dtype).min)
 def image2uint8(img):
-    if (img.dtype != np.float):
+    if (img.dtype != float):
         raise ValueError("ValueError exception thrown!\n \
                          \r\tInput img should be of dtype float.")
     return (255*img).astype(np.uint8)
