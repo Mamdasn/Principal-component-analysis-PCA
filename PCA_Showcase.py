@@ -56,7 +56,7 @@ def display_images(img_fullname, img, img_reconstructed, psnr):
     cv2.destroyAllWindows() 
 
 def main():
-    N = 160
+    N = 100
     print('Creating Database')
     DB = []
     DB_img_sizes = []
@@ -66,46 +66,61 @@ def main():
         DB_img_sizes.append(img_itr.shape)
         img_itr = image2double(cv2.resize(img_itr, dsize=(N, N)))
         DB.append(img_itr.T.reshape((-1), ))
-    DB = np.array(DB)
+    DB = np.array(DB, dtype=float)
+    # DB = np.transpose(DB)
     DB_mean = np.mean(DB, axis=0) # calculating mean of columns in DB
     
     # Zero-ing mean of DB
     DB = DB - DB_mean
     
     print('Calculating Covariance')
-    DB_cv = np.cov(DB)
+    DB_cv = np.cov(DB.T)
     print('DB_cv.shape:', DB_cv.shape)
-    print('Calculating Eigen Vector and Eigen Values')
+    print('Calculating Eigen Vectors and Eigen Values')
     [eigenValues, eigenVectors] = np.linalg.eigh(DB_cv)
 
     sort_index     = eigenValues.argsort()[::-1] # Descending Order
     eigenValues    = eigenValues[sort_index]
     eigenVectors   = eigenVectors[:, sort_index]
+    print("eigenVectors.shape:", eigenVectors.shape)
+    print()
+    print("First 15 elements of sorted eigen values:")
+    print(list(eigenValues)[:15])
+    print()
+    print("First 15 elements of sorted eigen values divide by next element:")
+    print(list(np.true_divide(eigenValues[:-1], eigenValues[1:]))[:15])
+    print()
     for indx in range(len(eigenValues)-1):
-        if abs(eigenValues[indx]) > abs(1e5 * eigenValues[indx+1]):
+        if 1e5 < abs(eigenValues[indx]/eigenValues[indx+1]):
+            print(f"Keeping first {indx+1} elements of eigen vectors")
             featureVectors = eigenVectors[:, 0:indx+1]
             featureValues  = eigenValues[0:indx+1]
             break
     else:
         featureVectors = eigenVectors
         featureValues  = eigenValues
+    # featureVectors = eigenVectors
+    # featureValues  = eigenValues
     # or manually pick p out of n dimenstions
-    # featureVectors = eigenVectors[:, 0:5]
+    # featureVectors = eigenVectors[:, :5]
     
     print('featureValues:', featureValues)
     
     print('featureVectors.shape:', featureVectors.shape)
     print('DB.shape:', DB.shape)
 
-    DB_PCAed = np.matmul(featureVectors.T, DB)
+    DB_PCAed = np.matmul(featureVectors.T, DB.T)
     print('DB_PCAed.shape', DB_PCAed.shape)
     
     print("Reconstructing Database")
-    DB_reconstructed = np.matmul(featureVectors, DB_PCAed) + DB_mean
+    DB_reconstructed = np.matmul(featureVectors, DB_PCAed).T + DB_mean
     print('DB_reconstructed.shape', DB_reconstructed.shape)
     
     # deZero-ing mean of DB
     DB = DB + DB_mean
+
+    print("DB.size", DB.size)
+    print("DB_reconstructed.size", DB_reconstructed.size)
 
     print("Saving Images")
     for indx, img_fullname in enumerate(img_fullnames):
