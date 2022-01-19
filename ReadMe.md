@@ -10,6 +10,5 @@ into a terminal, the program can easily start with
 ✔️ Also you can play around with variables like the number of Eigen vectors to keep to get more insight into PCA.  
 
 # Output 🗜️
-For images in `Database`, as much as of a tenth of dataset is thrown away. However, after reconstructing images out of the new dataset, there is no discernible difference between them.  
 ![An image from Database and its corresponding Output](/Figures/Figure-2.jpg "An image from Database and its corresponding Output")
 ![An image from Database and its corresponding Output](/Figures/Figure-3.jpg "An image from Database and its corresponding Output")  
